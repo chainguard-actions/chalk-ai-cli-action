@@ -1,14 +1,53 @@
-# chalk-ai/cli-action
+# `cli-action`
+> Sets up the Chalk CLI for tests in GitHub
 
-Wraps the Chalk CLI tool to enable deploying and managing Chalk apps
+## About
+This action sets up the Chalk CLI, `chalk` on GitHub's hosted Actions runners.
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/chalk-ai/cli-action](https://github.com/chalk-ai/cli-action).
+This action can be run on `ubuntu-latest`, `windows-latest`, and `macos-latest` 
+GitHub Actions runners, and will install and expose a specified version of the 
+`chalk` CLI on the runner environment.
 
-## Versions
+## Deploying to a branch
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v3.2 | [`v3.2`](https://github.com/chainguard-actions/chalk-ai-cli-action/tree/v3.2) | [`390b2f3`](https://github.com/chalk-ai/cli-action/commit/390b2f385a6d1ffbb6bd2ee9c9811455120e3706) |
+Set up the `chalk` CLI and use it to deploy to a branch:
+
+```yaml
+steps:
+- uses: chalk-ai/cli-action@v1
+  with:
+    client-id: token-dlkanvoinohnaon4oindoivn
+    client-secret: ts-5901039nlbm3n537el367b9025dc305
+
+- name: Deploy to branch
+  run: chalk apply --branch ${{ github.head_ref || github.ref_name }}
+```
+
+A specific version of the `chalk` CLI can be installed:
+
+```yaml
+steps:
+- uses: chalk-ai/cli-action@v1
+  with:
+    version: 1.1.0
+    client-id: token-dlkanvoinohnaon4oindoivn
+    client-secret: ts-5901039nlbm3n537el367b9025dc305
+
+- name: Deploy to branch
+  run: chalk apply --branch ${{ github.head_ref || github.ref_name }}
+```
+
+## Inputs
+The action supports the following inputs:
+
+- `client-id`: The Chalk Client ID from the tokens page in your settings.
+- `client-secret`: The Chalk Client Secret from the tokens page in your settings.
+- `version` (optional): The version of `chalk` to install, defaulting to `latest`.
+- `api-host` (optional): If you're using a self-hosted deployment, the API host where Chalk is hosted.
+- `environment` (optional): The Chalk environment to use. Your token is typically scoped to a single environment, and you won't need to use this parameter.
+
+## License
+Apache 2.0
 
 ## Privacy
 
