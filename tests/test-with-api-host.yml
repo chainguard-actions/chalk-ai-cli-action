@@ -1,0 +1,23 @@
+name: Test with api-host input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        with:
+          client-id: dummy-client-id
+          client-secret: dummy-client-secret
+          api-host: https://api.example.com
+        continue-on-error: true
+      - name: Assert Chalk CLI is installed
+        run: |
+          if ! command -v chalk &>/dev/null; then
+            echo "FAIL: chalk CLI binary not found in PATH"
+            exit 1
+          fi
+          echo "chalk found at: $(which chalk)"
+          echo "PASS"
