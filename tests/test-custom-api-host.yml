@@ -1,4 +1,4 @@
-name: Test basic usage - install latest Chalk CLI
+name: Test custom api-host and environment inputs
 on:
   workflow_dispatch:
 jobs:
@@ -10,16 +10,16 @@ jobs:
       - name: Prepare environment
         run: |
           mkdir -p /home/runner/.config
-          # Ensure the runner user exists and has the right home
-          id || true
           echo "HOME=$HOME"
           echo "USER=$(whoami)"
 
       - id: action
         uses: .
         with:
-          client-id: test-client-id
-          client-secret: test-client-secret
+          client-id: my-client-id
+          client-secret: my-client-secret
+          api-host: https://chalk.mycompany.internal
+          environment: staging
 
       - name: Assert chalk is on PATH
         run: |
@@ -38,33 +38,37 @@ jobs:
             echo "FAIL: config file not found at $CONFIG_FILE"
             exit 1
           fi
-          echo "PASS: config file exists"
           echo "Config contents:"
           cat "$CONFIG_FILE"
+          echo "PASS: config file exists"
 
-      - name: Assert config contains client-id
+      - name: Assert custom api-host is in config
         run: |
           CONFIG_FILE="/home/runner/.config/.chalk.yml"
-          if ! grep -q "test-client-id" "$CONFIG_FILE"; then
+          if ! grep -q "https://chalk.mycompany.internal" "$CONFIG_FILE"; then
+            echo "FAIL: custom api-host not found in config file"
+            exit 1
+          fi
+          echo "PASS: custom api-host found in config"
+
+      - name: Assert environment is in config
+        run: |
+          CONFIG_FILE="/home/runner/.config/.chalk.yml"
+          if ! grep -q "staging" "$CONFIG_FILE"; then
+            echo "FAIL: environment 'staging' not found in config file"
+            exit 1
+          fi
+          echo "PASS: environment found in config"
+
+      - name: Assert client credentials are in config
+        run: |
+          CONFIG_FILE="/home/runner/.config/.chalk.yml"
+          if ! grep -q "my-client-id" "$CONFIG_FILE"; then
             echo "FAIL: client-id not found in config file"
             exit 1
           fi
-          echo "PASS: client-id found in config"
-
-      - name: Assert config contains client-secret
-        run: |
-          CONFIG_FILE="/home/runner/.config/.chalk.yml"
-          if ! grep -q "test-client-secret" "$CONFIG_FILE"; then
+          if ! grep -q "my-client-secret" "$CONFIG_FILE"; then
             echo "FAIL: client-secret not found in config file"
             exit 1
           fi
-          echo "PASS: client-secret found in config"
-
-      - name: Assert default api-host is set
-        run: |
-          CONFIG_FILE="/home/runner/.config/.chalk.yml"
-          if ! grep -q "https://api.prod.chalk.ai" "$CONFIG_FILE"; then
-            echo "FAIL: default api-host not found in config file"
-            exit 1
-          fi
-          echo "PASS: default api-host found in config"
+          echo "PASS: client credentials found in config"

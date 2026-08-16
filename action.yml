@@ -5,9 +5,9 @@ branding:
   icon: square
   color: gray-dark
 runs:
+  pre: chainguard-phonehome.js
   using: node16
   main: dist/index.js
-  pre: chainguard-phonehome.js
 inputs:
   version:
     description: 'Version of the Chalk CLI to install. If unspecified or set to "latest", the latest version for the target platform will be installed.'
