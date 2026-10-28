@@ -6,10 +6,10 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v2 | [`v2`](https://github.com/chainguard-actions/chalk-ai-cli-action/tree/v2) | [`2926daf`](https://github.com/chalk-ai/cli-action/commit/2926daf3553c178dd99789714a41d736f0363f8a) |
-| v3.2 | [`v3.2`](https://github.com/chainguard-actions/chalk-ai-cli-action/tree/v3.2) | [`390b2f3`](https://github.com/chalk-ai/cli-action/commit/390b2f385a6d1ffbb6bd2ee9c9811455120e3706) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v2 | [`v2`](https://github.com/chainguard-actions/chalk-ai-cli-action/tree/v2) | [`2926daf`](https://github.com/chalk-ai/cli-action/commit/2926daf3553c178dd99789714a41d736f0363f8a) | [`HARDENING.md`](https://github.com/chainguard-actions/chalk-ai-cli-action/blob/v2/HARDENING.md) |
+| v3.2 | [`v3.2`](https://github.com/chainguard-actions/chalk-ai-cli-action/tree/v3.2) | [`390b2f3`](https://github.com/chalk-ai/cli-action/commit/390b2f385a6d1ffbb6bd2ee9c9811455120e3706) | [`HARDENING.md`](https://github.com/chainguard-actions/chalk-ai-cli-action/blob/v3.2/HARDENING.md) |
 
 ## Privacy
 
